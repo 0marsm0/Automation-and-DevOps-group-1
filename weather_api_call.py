@@ -15,17 +15,6 @@ def get_weather(lat=59.33, lon=18.06):
 
     respons = requests.get(url, params=params).json()
 
-    # count = 0
-    # time_data = []
-    # temp_data = []
-    # while count < 24:
-    #     time_data.append(respons["hourly"]["time"][count])
-    #     temp_data.append(respons["hourly"]["temperature_2m"][count])
-
-    #     count += 1
-
-    # data = {"Time": time_data,
-    #         "Temperature": temp_data}
 
     df = pd.DataFrame({
     "time": pd.to_datetime(respons["hourly"]["time"]),
