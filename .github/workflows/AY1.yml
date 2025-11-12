@@ -34,7 +34,7 @@ jobs:
         run: python -m pytest > pytest_log.txt 2>&1 && echo "All tests past!"
 
       - name: Upload log artifact on failure
-        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.logging_errors == 'true'
+        if: steps.run_tests.outcome == 'failure' && github.event_name == 'workflow_dispatch' && github.event.inputs.logging_errors == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: pytest-logs
