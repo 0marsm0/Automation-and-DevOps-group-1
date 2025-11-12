@@ -73,14 +73,13 @@ jobs:
 
     steps:
       - name: Login to Azure
-        uses: Azure/login@v1
-        with:
-          publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+        uses: actions/checkout@v4
 
       - name: Run docker image
         uses: Azure/webapps-deploy@v2
         with:
           app-name: mars-weather-app
+          publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
           image: ${{ secrets.DOCKER_USERNAME }}/weather-app:latest
 
 
