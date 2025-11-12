@@ -39,6 +39,7 @@ def test_process_data_returns_24_hours():
     assert pd.api.types.is_numeric_dtype(result_df["temperature"])
 
 
-def test_failure_for_logging():
-    print("Checking logging. This test is going to fail.")
-    assert 1 == 0
+# failure test
+# def test_failure_for_logging():
+#     print("Checking logging. This test is going to fail.")
+#     assert 1 == 0
