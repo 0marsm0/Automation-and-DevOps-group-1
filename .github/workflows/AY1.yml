@@ -11,7 +11,7 @@ on:
       logging_errors:
         type: boolean
         default: false
-        description: 'Turns on/off errors logging'
+        description: 'Errors logging'
 
 jobs:
   test:
@@ -75,7 +75,7 @@ jobs:
       - name: Login to Azure
         uses: Azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Run docker image
         uses: Azure/webapps-deploy@v2
