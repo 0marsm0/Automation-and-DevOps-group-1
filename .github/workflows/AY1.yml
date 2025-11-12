@@ -19,14 +19,30 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with: 
           python-version: "3.11"
+
       - name: Install requirements
         run: pip install -r requirements.txt
+
       - name: Run all tests
-        run: python -m pytest && echo "All tests past!"
+        id: run_tests
+        continue-on-error: true
+        run: python -m pytest > pytest_log.txt 2>&1 && echo "All tests past!"
+
+      - name: Upload log artifact on failure
+        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.logging_errors == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-logs
+          path: pytest_log.txt
+
+      - name: Fail job if tests failed
+        if: steps.run_tests.outcome == 'failure'
+        run: exit 1
   
   build_and_push_to_dockerhub:
 
@@ -41,7 +57,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
       - uses: actions/checkout@v4
+
       - uses: docker/build-push-action@v5
         with:
           push: true
