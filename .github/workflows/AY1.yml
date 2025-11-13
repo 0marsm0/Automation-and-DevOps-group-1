@@ -72,8 +72,7 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - name: Login to Azure
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Run docker image
         uses: Azure/webapps-deploy@v2
